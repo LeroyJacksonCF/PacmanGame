@@ -444,6 +444,7 @@ public class GridManager : MonoBehaviour
                 listOfTiles.Insert(_width + z + (_width * z) , spawnedTile);
 
             //sprite changing code
+            Debug.Log("Left of " + spawnedTile.name + " is: " + ReturnTileLeft(spawnedTile, true));
             listOfTilesToChange.Add(spawnedTile);
             if ((ReturnTileLeft(spawnedTile, true)) != spawnedTile)
             {
@@ -463,6 +464,7 @@ public class GridManager : MonoBehaviour
 
         //sprite changing code
         listOfTilesToChange.Add(extraSpawnedTile);
+        listOfTilesToChange.Add(listOfTiles[_width - 1]);
 
 
         _width += 1;

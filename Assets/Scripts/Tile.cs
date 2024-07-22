@@ -184,7 +184,9 @@ public class Tile : MonoBehaviour
 
     public void ChangeTileSprite()
     { //get a returned list of the compass tile directions
+        surroundingTiles = new List<Tile>();
         surroundingTiles = gridManagerObject.GetComponent<GridManager>().ReturnCompassTiles(this, true);
+        Debug.Log("Updating: " + gameObject.name);
 
         /*
         tileTL = (surroundingTiles[0] != this);
