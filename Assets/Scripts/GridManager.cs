@@ -30,6 +30,8 @@ public class GridManager : MonoBehaviour
     public List<Tile> listOfTilesToChange;
     private GameObject player;
     public int bombCount;
+    [SerializeField] private int mapSizeIncreaseCounter;
+    [SerializeField] private int mapSizeIncreaseThreshold;
 
     [Header("Prefabs")]
     public GameObject playerPrefab;
@@ -74,10 +76,13 @@ public class GridManager : MonoBehaviour
             for (int z = 0; z < _width; z++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0, -z), Quaternion.Euler(new Vector3(0,90,0)), transform); //Swap this for 2 lines above
                 randFloat = Random.Range(0f, 1f);
-                if (randFloat > 0.9f) // chance of mountain tile
+                /*if (randFloat > 0.9f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
-                } //Leaving space for more starting stuff
+                }  */
+                
+                //Leaving space for more starting stuff
+
                 spawnedTile.name = $"Tile_{x}_{z}";
                 listOfTiles.Add(spawnedTile);
             }
@@ -387,27 +392,37 @@ public class GridManager : MonoBehaviour
 
     public void SpawnBomb(){
         bool spawnedBomb = false;
+        int spawnedBombTries = 0;
 
         while (!spawnedBomb)
         {
             Tile bombTile = listOfTiles[Random.Range(0, listOfTiles.Count -1)];
-            if ( bombTile.GetComponent<Tile>().IsOccupied == false
+            if (bombTile.GetComponent<Tile>().IsOccupied == false
                 && bombTile.GetComponent<Tile>().CanTurnPowerup() == true
                 && bombTile != ReturnPlayerTile()
                 && bombTile.bombState != 2
                 )
-                {
+            {
+                if (spawnedBombTries >= _height || bombTile.turnedGrass)
+                { //try not to go on grass a few times, before giving up
+
                     List<Tile> bomblist = ReturnCompassTiles(bombTile);
                     bombCount = 8 - bomblist.Count;
-                    foreach (Tile bombListTile in bomblist){
+                    foreach (Tile bombListTile in bomblist)
+                    {
                         if (!bombListTile.IsOccupied && !bombListTile.isTempTile)
-                        {bombListTile.TurnBomb();}
-                        else {bombCount += 1;}
+                        { bombListTile.TurnBomb(); }
+                        else { bombCount += 1; }
                     }
 
                     bombTile.GetComponent<Tile>().TurnBomb();
                     spawnedBomb = true;
                 }
+            }
+            else
+            {
+                spawnedBombTries += 1;
+            }
         }
     }
 
@@ -428,51 +443,59 @@ public class GridManager : MonoBehaviour
 
     public void IncreaseMapSize()
     {
-        listOfTilesToChange = new List<Tile>();
+        SpawnScoreCube();
 
-        //Audio
-        mapExpandAudio.Play();
+        //check if player has done bomb enough times to increase map
+        mapSizeIncreaseCounter += 1;
+        if (mapSizeIncreaseCounter >= mapSizeIncreaseThreshold)
+        {
+            mapSizeIncreaseCounter = 0;
 
-        //Makes map one wider
-        for (int z = 0; z < _height - 1; z++) {
-            var spawnedTile = Instantiate(_tilePrefab, new Vector3(z, 0, _width * -1), Quaternion.Euler(new Vector3(0,90,0)), transform);
-                if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
+            listOfTilesToChange = new List<Tile>();
+
+            //Audio
+            mapExpandAudio.Play();
+
+            //Makes map one wider
+            for (int z = 0; z < _height - 1; z++) {
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(z, 0, _width * -1), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                if (Random.Range(0.01f, 1f) >= 0.8f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
                 }
                 spawnedTile.name = $"Tile_{z}_{_width}";
-                listOfTiles.Insert(_width + z + (_width * z) , spawnedTile);
+                listOfTiles.Insert(_width + z + (_width * z), spawnedTile);
 
-            //sprite changing code
-            Debug.Log("Left of " + spawnedTile.name + " is: " + ReturnTileLeft(spawnedTile, true));
-            listOfTilesToChange.Add(spawnedTile);
-            if ((ReturnTileLeft(spawnedTile, true)) != spawnedTile)
-            {
-                listOfTilesToChange.Add(ReturnTileLeft(spawnedTile, true));
+                //sprite changing code
+                Debug.Log("Left of " + spawnedTile.name + " is: " + ReturnTileLeft(spawnedTile, true));
+                listOfTilesToChange.Add(spawnedTile);
+                if ((ReturnTileLeft(spawnedTile, true)) != spawnedTile)
+                {
+                    listOfTilesToChange.Add(ReturnTileLeft(spawnedTile, true));
+                }
             }
-        }
 
             //Final makes map one wider, but instead of inserting z, 'adding' instead to avoid error
-            var extraSpawnedTile = Instantiate(_tilePrefab, new Vector3(_height -1, 0, _width * -1), Quaternion.Euler(new Vector3(0,90,0)), transform);
-                if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
-                {
-                    extraSpawnedTile.GetComponent<Tile>().TurnMountain();
-                }
-            extraSpawnedTile.name = $"Tile_{_height -1}_{_width}";
+            var extraSpawnedTile = Instantiate(_tilePrefab, new Vector3(_height - 1, 0, _width * -1), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+            if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
+            {
+                extraSpawnedTile.GetComponent<Tile>().TurnMountain();
+            }
+            extraSpawnedTile.name = $"Tile_{_height - 1}_{_width}";
             listOfTiles.Add(extraSpawnedTile);
 
 
-        //sprite changing code
-        listOfTilesToChange.Add(extraSpawnedTile);
-        listOfTilesToChange.Add(listOfTiles[_width - 1]);
+            //sprite changing code
+            listOfTilesToChange.Add(extraSpawnedTile);
+            listOfTilesToChange.Add(listOfTiles[_width - 1]);
 
 
-        _width += 1;
-        _height += 1;
-        
-        // Maes map one taller
-        for (int x = 0; x < _width; x++){
-            var spawnedTile = Instantiate(_tilePrefab, new Vector3(_height - 1, 0, -x), Quaternion.Euler(new Vector3(0,90,0)), transform);
+            _width += 1;
+            _height += 1;
+
+            // Maes map one taller
+            for (int x = 0; x < _width; x++) {
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(_height - 1, 0, -x), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
                 if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
@@ -480,38 +503,41 @@ public class GridManager : MonoBehaviour
                 spawnedTile.name = $"Tile_{_height}_{x}";
                 listOfTiles.Add(spawnedTile);
 
-            //sprite changing code
-            listOfTilesToChange.Add(spawnedTile);
-            if ((ReturnTileDown(spawnedTile, true))!= spawnedTile)
+                //sprite changing code
+                listOfTilesToChange.Add(spawnedTile);
+                if ((ReturnTileDown(spawnedTile, true)) != spawnedTile)
+                {
+                    listOfTilesToChange.Add(ReturnTileDown(spawnedTile, true));
+                }
+
+            }
+            //tile sprite calculation
+            foreach (Tile tile in listOfTilesToChange)
             {
-                listOfTilesToChange.Add(ReturnTileDown(spawnedTile, true));
+                tile.ChangeTileSprite();
             }
 
+
+            //Increase number of enemies, after a number of map increases. Also increases map counter threshold;
+            if (currentRoundTillNextEnemy == roundsTillNextEnemy)
+            { SpawnEnemy("none");
+                currentRoundTillNextEnemy = 0;
+                mapSizeIncreaseThreshold += 1;
+            }
+            else
+            { currentRoundTillNextEnemy += 1; }
+
+
+            //increases the max number of boost counts, after a number of map increases
+            currentPUIncreaseCountdown += 1;
+            if (currentPUIncreaseCountdown == turnsTillPUNumIncrease)
+            {
+                maxNumOfPUs += 1;
+                currentPUIncreaseCountdown = 0;
+            }
+
+            ResetCamera();
+            scoreManager.UpdateScore(250);
         }
-        //tile sprite calculation
-        foreach (Tile tile in listOfTilesToChange)
-        {
-            tile.ChangeTileSprite();
-        }
-
-
-        //Increase number of enemies, after a number of map increases
-        if (currentRoundTillNextEnemy == roundsTillNextEnemy)
-        {SpawnEnemy("none");
-        currentRoundTillNextEnemy = 0;}
-        else
-        {currentRoundTillNextEnemy += 1;}
-
-
-         //increases the max number of boost counts, after a number of map increases
-        currentPUIncreaseCountdown += 1;
-        if (currentPUIncreaseCountdown == turnsTillPUNumIncrease)
-        {
-            maxNumOfPUs += 1;
-            currentPUIncreaseCountdown = 0;
-        }
-
-        ResetCamera();
-        scoreManager.UpdateScore(250);
     }
 }

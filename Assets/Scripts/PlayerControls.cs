@@ -255,7 +255,6 @@ public class PlayerControls : MonoBehaviour
         {
             gridManagerObject.GetComponent<GridManager>().AddScore(50); //Add 100 points
             currentTile.GetComponent<Tile>().ClaimScoreCube();
-            gridManagerObject.GetComponent<GridManager>().SpawnScoreCube();
         }
     }
     private void MoveOffTempTile(){

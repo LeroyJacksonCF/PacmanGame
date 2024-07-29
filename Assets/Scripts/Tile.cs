@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
     public bool hasBoost;
     public bool hasTempTilePU;
     public bool isTempTile;
+    public bool turnedGrass;
     public GameObject dirt;
     public GameObject ExtraScoreCube;
     public GameObject boostG;
@@ -18,7 +19,6 @@ public class Tile : MonoBehaviour
     public GameObject boostR;
     public int bombState;
     public GameObject bombTileUntouched;
-    public GameObject bombTileTouched;
     public int TempTileRemainder;
     public GameObject TempTilePU;
     public GameObject TempTile03;
@@ -30,6 +30,7 @@ public class Tile : MonoBehaviour
     public List<Tile> surroundingTiles;
     public int tiletypeInt = 0;
     public List<Sprite> tileSpriteList;
+    public List<Sprite> tileSpriteListGrass;
     public SpriteRenderer tileSpriteRenderer;
 
     [Header("Ingame UI")]
@@ -73,7 +74,7 @@ public class Tile : MonoBehaviour
 
     public bool CanTurnPowerup()
     {
-        if (!IsOccupied && !hasScoreCube && !hasBoost && !isTempTile) { return true; }
+        if (!IsOccupied && !hasScoreCube && !hasBoost && !isTempTile && bombState != 1) { return true; }
         else { return false; }
     }
     public void TurnScoreCube()
@@ -129,9 +130,7 @@ public class Tile : MonoBehaviour
         if (bombState == 0 || bombState == 2)
         {
             bombState = 1;
-            dirt.SetActive(false);
             bombTileUntouched.SetActive(true);
-            bombTileTouched.SetActive(false);
         }
         else
         {
@@ -142,7 +141,8 @@ public class Tile : MonoBehaviour
     {
         bombState = 2;
         bombTileUntouched.SetActive(false);
-        bombTileTouched.SetActive(true);
+        tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
+        turnedGrass = true;
     }
 
     public void TurnTempTilePU()
@@ -211,8 +211,15 @@ public class Tile : MonoBehaviour
         if(surroundingTiles[6] != this && !surroundingTiles[6].IsBlank) { tiletypeInt += 2; }
         if(surroundingTiles[7] != this && !surroundingTiles[7].IsBlank) { tiletypeInt += 1; }
 
+        if (turnedGrass)
+        {
+            tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
+        }
+        else
+        {
+            tileSpriteRenderer.sprite = tileSpriteList[tiletypeInt];
+        }
 
-        tileSpriteRenderer.sprite = tileSpriteList[tiletypeInt];
         if (IsBlank) { tileSpriteRenderer.sprite = null; }
 
     }

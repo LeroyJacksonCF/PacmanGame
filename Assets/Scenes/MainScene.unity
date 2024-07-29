@@ -2025,8 +2025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b4ecf231571374da6d02a34e66a156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 6
-  _height: 5
+  _width: 4
+  _height: 3
   PlayerStartingPosition: 0
   maxNumOfPUs: 1
   turnsTillPUNumIncrease: 3
@@ -2039,6 +2039,8 @@ MonoBehaviour:
   listOfTiles: []
   listOfTilesToChange: []
   bombCount: 0
+  mapSizeIncreaseCounter: 1
+  mapSizeIncreaseThreshold: 2
   playerPrefab: {fileID: 9131772047468122878, guid: ad0d70ddcea44c14eae14fda3d5ceaa9, type: 3}
   enemyPrefab: {fileID: 5082531794751015092, guid: 9d1a7659b4093df429509d7b22e23c38, type: 3}
   _tilePrefab: {fileID: 8644918325538125658}
@@ -2841,6 +2843,10 @@ PrefabInstance:
     - target: {fileID: 8676350812494521404, guid: aaf7db159761d25459a22780f5449614, type: 3}
       propertyPath: m_Name
       value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676350812494521404, guid: aaf7db159761d25459a22780f5449614, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaf7db159761d25459a22780f5449614, type: 3}

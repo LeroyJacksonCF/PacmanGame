@@ -122,7 +122,6 @@ public class PowerupController : MonoBehaviour
             {
                 gridManagerScript.GetComponent<GridManager>().AddScore(50); //Add 50 points
                 tileCrossed.GetComponent<Tile>().TurnDefault();
-                gridManagerScript.GetComponent<GridManager>().SpawnScoreCube();
             }
 
             //Check boosted tiles for bomb tiles
