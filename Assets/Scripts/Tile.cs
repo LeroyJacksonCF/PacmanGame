@@ -31,7 +31,9 @@ public class Tile : MonoBehaviour
     public int tiletypeInt = 0;
     public List<Sprite> tileSpriteList;
     public List<Sprite> tileSpriteListGrass;
+    public List<Sprite> tileSpriteListUnder;
     public SpriteRenderer tileSpriteRenderer;
+    public SpriteRenderer tileSpriteRendererUnder;
 
     [Header("Ingame UI")]
     [Tooltip("Art / VFX stuff")]
@@ -43,6 +45,7 @@ public class Tile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //gridManagerObject = GameObject.Find("GridManager");
     }
 
     // Update is called once per frame
@@ -184,24 +187,14 @@ public class Tile : MonoBehaviour
 
     public void ChangeTileSprite()
     { //get a returned list of the compass tile directions
+        Debug.Log("Updating1: " + gameObject.name);
         surroundingTiles = new List<Tile>();
         surroundingTiles = gridManagerObject.GetComponent<GridManager>().ReturnCompassTiles(this, true);
-        Debug.Log("Updating: " + gameObject.name);
-
-        /*
-        tileTL = (surroundingTiles[0] != this);
-        tileT = (surroundingTiles[1] != this);
-        tileTR = (surroundingTiles[2] != this);
-        tileL = (surroundingTiles[3] != this);
-        tileR = (surroundingTiles[4] != this);
-        tileBL = (surroundingTiles[5] != this);
-        tileB = (surroundingTiles[6] != this);
-        tileBR = (surroundingTiles[7] != this);
-        */
+        Debug.Log("Updating2: " + gameObject.name);
 
         tiletypeInt = 0;
 
-
+        //TopTile
         if(surroundingTiles[0] != this && !surroundingTiles[0].IsBlank) { tiletypeInt += 128; }
         if(surroundingTiles[1] != this && !surroundingTiles[1].IsBlank) { tiletypeInt += 64; }
         if(surroundingTiles[2] != this && !surroundingTiles[2].IsBlank) { tiletypeInt += 32; }
@@ -211,16 +204,32 @@ public class Tile : MonoBehaviour
         if(surroundingTiles[6] != this && !surroundingTiles[6].IsBlank) { tiletypeInt += 2; }
         if(surroundingTiles[7] != this && !surroundingTiles[7].IsBlank) { tiletypeInt += 1; }
 
-        if (turnedGrass)
+        if (turnedGrass) //Top Tile Grass
         {
             tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
         }
-        else
+        else //Top Tile Dirt
         {
             tileSpriteRenderer.sprite = tileSpriteList[tiletypeInt];
         }
 
-        if (IsBlank) { tileSpriteRenderer.sprite = null; }
+        if (IsBlank) { 
+            tileSpriteRenderer.sprite = null;
+        }
+    }
 
+    public void ChangeUnderTileSprite()
+    {
+        Debug.Log("Updating3: " + gameObject.name);
+        //under Tile
+        if (tileSpriteRenderer is not null)
+        {
+            tileSpriteRendererUnder.sprite = tileSpriteListUnder[tiletypeInt];
+        }
+
+        if (IsBlank)
+        {
+            tileSpriteRendererUnder.sprite = null;
+        }
     }
 }

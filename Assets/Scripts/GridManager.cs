@@ -75,6 +75,7 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < _height; x++) {
             for (int z = 0; z < _width; z++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0, -z), Quaternion.Euler(new Vector3(0,90,0)), transform); //Swap this for 2 lines above
+                spawnedTile.gridManagerObject = gameObject;
                 randFloat = Random.Range(0f, 1f);
                 /*if (randFloat > 0.9f) // chance of mountain tile
                 {
@@ -91,6 +92,7 @@ public class GridManager : MonoBehaviour
         foreach (Tile tile in listOfTiles)
         {
             tile.ChangeTileSprite();
+            tile.ChangeUnderTileSprite();
         }
 
 
@@ -380,10 +382,11 @@ public class GridManager : MonoBehaviour
                 randomTile = Random.Range(0, listOfTiles.Count - 1);
                 if (listOfTiles[randomTile].GetComponent<Tile>().CanTurnPowerup())
                 {
-                    randInt = Random.Range(1, 3);
+                    randInt = Random.Range(1, 4);
                     //Choose which PU to give
                     if (randInt == 1){listOfTiles[randomTile].GetComponent<Tile>().TurnBoost();}
                     else if (randInt == 2){listOfTiles[randomTile].GetComponent<Tile>().TurnTempTilePU();}
+                    else if (randInt == 3) { SpawnScoreCube(); }
                     randomTile = -1;
                 }
             }
@@ -443,8 +446,6 @@ public class GridManager : MonoBehaviour
 
     public void IncreaseMapSize()
     {
-        SpawnScoreCube();
-
         //check if player has done bomb enough times to increase map
         mapSizeIncreaseCounter += 1;
         if (mapSizeIncreaseCounter >= mapSizeIncreaseThreshold)
@@ -459,6 +460,7 @@ public class GridManager : MonoBehaviour
             //Makes map one wider
             for (int z = 0; z < _height - 1; z++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(z, 0, _width * -1), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                spawnedTile.gridManagerObject = gameObject;
                 if (Random.Range(0.01f, 1f) >= 0.8f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
@@ -477,6 +479,7 @@ public class GridManager : MonoBehaviour
 
             //Final makes map one wider, but instead of inserting z, 'adding' instead to avoid error
             var extraSpawnedTile = Instantiate(_tilePrefab, new Vector3(_height - 1, 0, _width * -1), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+            extraSpawnedTile.gridManagerObject = gameObject;
             if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
             {
                 extraSpawnedTile.GetComponent<Tile>().TurnMountain();
@@ -496,6 +499,7 @@ public class GridManager : MonoBehaviour
             // Maes map one taller
             for (int x = 0; x < _width; x++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(_height - 1, 0, -x), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                spawnedTile.gridManagerObject = gameObject;
                 if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
@@ -515,6 +519,7 @@ public class GridManager : MonoBehaviour
             foreach (Tile tile in listOfTilesToChange)
             {
                 tile.ChangeTileSprite();
+                tile.ChangeUnderTileSprite();
             }
 
 
