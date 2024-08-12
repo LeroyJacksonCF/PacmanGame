@@ -54,11 +54,28 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 51daa5edb4312f84cb3eb049e8f89a20, type: 3}
     - {fileID: 2800000, guid: 3ce43f2bfe5f91448a901d88a01c9065, type: 3}
     - {fileID: 2800000, guid: b804d1f1eeb9c21419f55f3e2830340e, type: 3}
+    - {fileID: 2800000, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: -2108907237, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 585064554, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -1998177248, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -982062333, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -720391632, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -360769405, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 1185887916, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 2017528491, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 1975244737, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -126522734, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 2118875269, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 1805727121, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: 948262104, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -191892400, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -211642829, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
+  - {fileID: -809500168, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
   - {fileID: -2140282825, guid: 9e22c3e0ce2779442998adea580ae863, type: 3}
   - {fileID: 596724418, guid: 9e22c3e0ce2779442998adea580ae863, type: 3}
   - {fileID: -5222732, guid: 9e22c3e0ce2779442998adea580ae863, type: 3}
@@ -417,6 +434,22 @@ SpriteAtlas:
   - {fileID: 1087998138, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
   - {fileID: 446703588, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Island_Background_Srites_14
+  - Island_Background_Srites_15
+  - Island_Background_Srites_12
+  - Island_Background_Srites_13
+  - Island_Background_Srites_10
+  - Island_Background_Srites_11
+  - Island_Background_Srites_9
+  - Island_Background_Srites_8
+  - Island_Background_Srites_3
+  - Island_Background_Srites_2
+  - Island_Background_Srites_1
+  - Island_Background_Srites_0
+  - Island_Background_Srites_7
+  - Island_Background_Srites_6
+  - Island_Background_Srites_5
+  - Island_Background_Srites_4
   - Basic_Furniture_5
   - Basic_Furniture_4
   - Basic_Furniture_7

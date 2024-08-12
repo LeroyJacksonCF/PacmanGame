@@ -148,7 +148,7 @@ public class PowerupController : MonoBehaviour
         hasBoost = false;
 
         //Update Score Manager
-        cameraObject.GetComponent<ScoreManager>().setInventoryIcon("off");
+        cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
         } 
     }
 

@@ -11,6 +11,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI powerupText;
+    [SerializeField] Image powerupSprite;
+    [SerializeField] Sprite boostSprite;
+    [SerializeField] Sprite temptileSprite;
 
     [Header("Loss UI")]
     [SerializeField] TextMeshProUGUI lossScoreText;
@@ -29,7 +32,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreText.SetText("Score: 0");
+        scoreText.SetText("Score:\n0");
     }
 
     // Update is called once per frame
@@ -61,7 +64,7 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScore(int addPoints)
     {
         score += addPoints;
-        scoreText.SetText("Score: " + score);
+        scoreText.SetText("Score:\n" + score);
 
         //Summon fast enemy
         if (score >= (2000 * (gridManagerObject.numOfFastEnemies + 1))){
@@ -100,11 +103,22 @@ public class ScoreManager : MonoBehaviour
 
     public void setInventoryIcon(string iconString)
     {
-        if (iconString == "boost") 
-        {powerupText.SetText("Powerup: Boost");}
+        if (iconString == "")
+        {
+            powerupSprite.gameObject.SetActive(false);
+        }
+        
+        else if (iconString == "boost") 
+        {
+            powerupSprite.sprite = boostSprite;
+            powerupSprite.gameObject.SetActive(true);
+        }
         else if (iconString == "temptile")
-        {powerupText.SetText("Powerup: Temp Tile");}
+        {
+            powerupSprite.sprite = temptileSprite;
+            powerupSprite.gameObject.SetActive(true);
+        }
         else
-        {powerupText.SetText("Powerup:");}
+        {powerupText.SetText("Error");}
     }
 }
