@@ -187,10 +187,8 @@ public class Tile : MonoBehaviour
 
     public void ChangeTileSprite()
     { //get a returned list of the compass tile directions
-        Debug.Log("Updating1: " + gameObject.name);
         surroundingTiles = new List<Tile>();
         surroundingTiles = gridManagerObject.GetComponent<GridManager>().ReturnCompassTiles(this, true);
-        Debug.Log("Updating2: " + gameObject.name);
 
         tiletypeInt = 0;
 
@@ -220,7 +218,6 @@ public class Tile : MonoBehaviour
 
     public void ChangeUnderTileSprite()
     {
-        Debug.Log("Updating3: " + gameObject.name);
         //under Tile
         if (tileSpriteRenderer is not null)
         {

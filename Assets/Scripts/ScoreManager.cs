@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("Loss UI")]
     [SerializeField] TextMeshProUGUI lossScoreText;
+    [SerializeField] TextMeshProUGUI lossHighScoreText;
     [SerializeField] GameObject lossBackground;
 
     [Header("Other")]
@@ -28,11 +29,14 @@ public class ScoreManager : MonoBehaviour
     private float fastEnemyTime;
     private float fastEnemyTimeLimit;
 
+    private float highScore;
+
 
     // Start is called before the first frame update
     void Start()
     {
         scoreText.SetText("Score:\n0");
+        highScore = PlayerPrefs.GetFloat("HighScore");
     }
 
     // Update is called once per frame
@@ -87,10 +91,24 @@ public class ScoreManager : MonoBehaviour
         if (finalScore == 0){ 
             finalScore = score;
             lossScoreText.SetText("Score: " + finalScore);
+
+            //set highscore
+            if (finalScore > PlayerPrefs.GetFloat("HighScore"))
+            {
+                PlayerPrefs.SetFloat("HighScore", finalScore);
+                lossHighScoreText.SetText("New High Score!");
+            }
+            else
+            {
+                lossHighScoreText.SetText("Score: " + PlayerPrefs.GetFloat("HighScore"));
+            }
+
         }
+
 
         lossBackground.gameObject.SetActive(true);
         scoreText.gameObject.SetActive(false);
+
         timerText.gameObject.SetActive(false);
         powerupText.gameObject.SetActive(false);
         time = -99999;

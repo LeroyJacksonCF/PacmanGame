@@ -40,6 +40,7 @@ public class GridManager : MonoBehaviour
     
     public GameObject cameraObject;
     public ScoreManager scoreManager;
+    public VFXController vfxHolder;
 
     [Header("Camera/Audio")]    
     [SerializeField] Vector3 oldCameraPosition;
@@ -100,13 +101,25 @@ public class GridManager : MonoBehaviour
 
     void ResetCamera()
     {
+        Debug.Log("Camera Moves");
+
         //old camera stats
         oldCameraPosition = cameraObject.transform.position;
         oldCameraOrthSize = cameraObject.GetComponent<Camera>().orthographicSize;
 
         //New camera stat calculation
-        newCameraPosition = cameraObject.gameObject.transform.position = new Vector3 ((_height/2) + ((_height % 2) *0.5f) - 0.5f, 10, -1 * ((_width/2) - 0.5f));
-        newCameraOrthSize = cameraObject.GetComponent<Camera>().orthographicSize = Mathf.Max(_width, _height) / 2;
+        newCameraPosition = cameraObject.gameObject.transform.position = new Vector3 ((_height/2f) -0.75f, 10, -1 * ((_width/2f) - 0.5f));
+
+        newCameraOrthSize = cameraObject.GetComponent<Camera>().orthographicSize = Mathf.Max(_width, _height) / 2f;
+
+        if (cameraObject.GetComponent<Camera>().aspect < 1.33)
+        {
+            Debug.Log("Aspect logic. Aspect is: " + cameraObject.GetComponent<Camera>().aspect);
+            newCameraOrthSize = cameraObject.GetComponent<Camera>().orthographicSize * 1.33f/(cameraObject.GetComponent<Camera>().aspect);
+
+        }
+
+
 
         //lerp once to stop first frame being buggy
         cameraLerp = 0f;
@@ -457,6 +470,9 @@ public class GridManager : MonoBehaviour
             //Audio
             mapExpandAudio.Play();
 
+            //Expand island Particles
+            vfxHolder.IncreaseIslandHeight();
+
             //Makes map one wider
             for (int z = 0; z < _height - 1; z++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(z, 0, _width * -1), Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -469,7 +485,6 @@ public class GridManager : MonoBehaviour
                 listOfTiles.Insert(_width + z + (_width * z), spawnedTile);
 
                 //sprite changing code
-                Debug.Log("Left of " + spawnedTile.name + " is: " + ReturnTileLeft(spawnedTile, true));
                 listOfTilesToChange.Add(spawnedTile);
                 if ((ReturnTileLeft(spawnedTile, true)) != spawnedTile)
                 {
