@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI lossScoreText;
     [SerializeField] TextMeshProUGUI lossHighScoreText;
     [SerializeField] GameObject lossBackground;
+    [SerializeField] GameObject restartButton;
 
     [Header("Other")]
     [SerializeField] private GridManager gridManagerObject;
@@ -113,6 +115,8 @@ public class ScoreManager : MonoBehaviour
         powerupText.gameObject.SetActive(false);
         time = -99999;
         fastEnemyTime = -99999;
+
+        EventSystem.current.SetSelectedGameObject(restartButton);
     }
 
     public void RestartGame(){
