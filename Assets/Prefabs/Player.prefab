@@ -10666,6 +10666,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d83ee0c315585ce4db460c85e7af3b26, type: 3}
   - {fileID: 8300000, guid: b8874bdd85a153c468cb6412a6b6b0f3, type: 3}
   - {fileID: 8300000, guid: f8b94c86bdfc6a44aa8696030aca549b, type: 3}
+  walkingIceSounds:
+  - {fileID: 8300000, guid: 3df7dfe6eb06f87408e27056b5bb7f0b, type: 3}
+  - {fileID: 8300000, guid: b5a7bf60c0959fc449f953616a9214ff, type: 3}
+  - {fileID: 8300000, guid: a9be10ef1072c2e49b17149bf1ffdd2d, type: 3}
   exInput: 
   inputCommand: none
   secondInputCommand: none

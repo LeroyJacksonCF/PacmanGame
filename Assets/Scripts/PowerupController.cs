@@ -45,7 +45,7 @@ public class PowerupController : MonoBehaviour
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("boost");
         hasBoost = true;
     }
-    private void useBoost()
+    public void useBoost(bool iceBoost = false)
     {
         //move
         foundFurthestBoostTile = false;
@@ -53,7 +53,10 @@ public class PowerupController : MonoBehaviour
         boostListOfTilesCrossed = new List<Tile>();
         string currentorExInput = "";
 
-        playerBoostSource.Play();
+        if (!iceBoost)
+        {
+            playerBoostSource.Play();
+        }
 
         //Sets current input command, or if that is "none", then the exInput
         if (playerControlsScript.inputCommand != "none"){
@@ -112,6 +115,12 @@ public class PowerupController : MonoBehaviour
                     }
                 }
             else{boostListOfTilesCrossed.Add(furthestBoostTile);}
+
+                //Ice Tile logic
+            if (!furthestBoostTile.isIce && iceBoost)
+            {
+                foundFurthestBoostTile = true;
+            }
         }
 
         //Check boosted tiles for stuff

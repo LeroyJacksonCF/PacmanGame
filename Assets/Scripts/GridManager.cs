@@ -78,10 +78,11 @@ public class GridManager : MonoBehaviour
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0, -z), Quaternion.Euler(new Vector3(0,90,0)), transform); //Swap this for 2 lines above
                 spawnedTile.gridManagerObject = gameObject;
                 randFloat = Random.Range(0f, 1f);
-                /*if (randFloat > 0.9f) // chance of mountain tile
+
+                if (randFloat > 0.8f) // chance of ice tile
                 {
-                    spawnedTile.GetComponent<Tile>().TurnMountain();
-                }  */
+                    spawnedTile.GetComponent<Tile>().TurnIce();
+                }  
                 
                 //Leaving space for more starting stuff
 
@@ -481,6 +482,10 @@ public class GridManager : MonoBehaviour
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
                 }
+                if (Random.Range(0.01f, 1f) >= 0.6f) // chance of ice tile
+                {
+                    spawnedTile.GetComponent<Tile>().TurnIce();
+                }
                 spawnedTile.name = $"Tile_{z}_{_width}";
                 listOfTiles.Insert(_width + z + (_width * z), spawnedTile);
 
@@ -498,6 +503,10 @@ public class GridManager : MonoBehaviour
             if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
             {
                 extraSpawnedTile.GetComponent<Tile>().TurnMountain();
+            }
+            if (Random.Range(0.01f, 1f) > 0.9f) // chance of ice tile
+            {
+                extraSpawnedTile.GetComponent<Tile>().TurnIce();
             }
             extraSpawnedTile.name = $"Tile_{_height - 1}_{_width}";
             listOfTiles.Add(extraSpawnedTile);
@@ -518,6 +527,10 @@ public class GridManager : MonoBehaviour
                 if (Random.Range(0.01f, 1f) > 0.9f) // chance of mountain tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
+                }
+                if (Random.Range(0.01f, 1f) > 0.9f) // chance of ice tile
+                {
+                    spawnedTile.GetComponent<Tile>().TurnIce();
                 }
                 spawnedTile.name = $"Tile_{_height}_{x}";
                 listOfTiles.Add(spawnedTile);

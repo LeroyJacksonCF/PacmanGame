@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     public bool hasTempTilePU;
     public bool isTempTile;
     public bool turnedGrass;
+    public bool isIce;
     public GameObject dirt;
     public GameObject ExtraScoreCube;
     public GameObject boostG;
@@ -26,11 +27,12 @@ public class Tile : MonoBehaviour
     public GameObject TempTile01;
 
     private int boostTurns;
-
     public List<Tile> surroundingTiles;
     public int tiletypeInt = 0;
     public List<Sprite> tileSpriteList;
     public List<Sprite> tileSpriteListGrass;
+    public List<Sprite> tileSpriteListDirtIce;
+    public List<Sprite> tileSpriteListIce;
     public List<Sprite> tileSpriteListUnder;
     public SpriteRenderer tileSpriteRenderer;
     public SpriteRenderer tileSpriteRendererUnder;
@@ -41,18 +43,6 @@ public class Tile : MonoBehaviour
     [SerializeField] ParticleSystem chestDelayedVFX;
     [SerializeField] AudioSource chestOpenSFX;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //gridManagerObject = GameObject.Find("GridManager");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void TurnMountain()
     {
@@ -73,6 +63,7 @@ public class Tile : MonoBehaviour
         if (bombState == 0) { dirt.SetActive(true); }
         hasTempTilePU = false;
         TempTilePU.SetActive(false);
+        isIce = false;
     }
 
     public bool CanTurnPowerup()
@@ -144,8 +135,17 @@ public class Tile : MonoBehaviour
     {
         bombState = 2;
         bombTileUntouched.SetActive(false);
-        tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
-        turnedGrass = true;
+
+        if (isIce) //Become Ice
+        {
+            tileSpriteRenderer.sprite = tileSpriteListIce[tiletypeInt];
+            turnedGrass = true;
+        }
+        else // Become Grass
+        {
+            tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
+            turnedGrass = true;
+        }
     }
 
     public void TurnTempTilePU()
@@ -160,6 +160,7 @@ public class Tile : MonoBehaviour
         TempTileRemainder = 3;
         TempTile03.SetActive(true);
         IsOccupied = false;
+        isIce = false;
     }
 
     public void TempTileDecrease()
@@ -185,6 +186,11 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public void TurnIce()
+    {
+        isIce = true;
+    }
+
     public void ChangeTileSprite()
     { //get a returned list of the compass tile directions
         surroundingTiles = new List<Tile>();
@@ -202,7 +208,15 @@ public class Tile : MonoBehaviour
         if(surroundingTiles[6] != this && !surroundingTiles[6].IsBlank) { tiletypeInt += 2; }
         if(surroundingTiles[7] != this && !surroundingTiles[7].IsBlank) { tiletypeInt += 1; }
 
-        if (turnedGrass) //Top Tile Grass
+        if (isIce && turnedGrass) //Top Tile Ice
+        {
+            tileSpriteRenderer.sprite = tileSpriteListIce[tiletypeInt];
+        }
+        else if (isIce) //Top Tile Dirt Ice
+        {
+            tileSpriteRenderer.sprite = tileSpriteListDirtIce[tiletypeInt];
+        }
+        else if (turnedGrass) //Top Tile Grass
         {
             tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
         }

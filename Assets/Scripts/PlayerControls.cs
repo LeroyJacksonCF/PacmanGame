@@ -15,6 +15,7 @@ public class PlayerControls : MonoBehaviour
     public AudioSource playerAudioSource2;
     private bool playerstep1 = false;
     [SerializeField] private List<AudioClip> walkingSounds;
+    [SerializeField] private List<AudioClip> walkingIceSounds;
 
     public string exInput; 
     public string inputCommand = "none";
@@ -226,6 +227,12 @@ public class PlayerControls : MonoBehaviour
 
     public void PlayerTurn()
     {
+        //Ice Tiles
+        if (currentTile.isIce)
+        {
+            powerupControllerScript.useBoost(true);
+        }
+
         //Regular bomb logic
         if (currentTile.GetComponent<Tile>().bombState == 1)
         {
@@ -268,13 +275,28 @@ public class PlayerControls : MonoBehaviour
     {
         if (playerstep1)
         {
-            playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingSounds.Count - 1)];
+            if (currentTile.isIce)
+            {
+                Debug.Log("Slip");
+                playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingIceSounds.Count - 1)];
+            }
+            else
+            {
+                playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingSounds.Count - 1)];
+            }
             playerAudioSource1.Play();
             playerstep1 = false;
         }
         else
         {
-            playerAudioSource2.clip = walkingSounds[Random.Range(0, walkingSounds.Count - 1)];
+            if (currentTile.isIce)
+            {
+                playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingIceSounds.Count - 1)];
+            }
+            else
+            {
+                playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingSounds.Count - 1)];
+            }
             playerAudioSource2.Play();
             playerstep1 = true;
         }
