@@ -1317,6 +1317,7 @@ MonoBehaviour:
   powerupSprite: {fileID: 1350193002}
   boostSprite: {fileID: 1407890926, guid: 9e22c3e0ce2779442998adea580ae863, type: 3}
   temptileSprite: {fileID: 350638978, guid: 3753a34f1792b9e488d9d31233ef94a4, type: 3}
+  iceStormSprite: {fileID: -788839080, guid: 8194a295a8538374a9eb65fa80d3cee9, type: 3}
   lossScoreText: {fileID: 415687373}
   lossHighScoreText: {fileID: 1954368245}
   lossBackground: {fileID: 366864498}

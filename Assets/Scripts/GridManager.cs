@@ -396,11 +396,12 @@ public class GridManager : MonoBehaviour
                 randomTile = Random.Range(0, listOfTiles.Count - 1);
                 if (listOfTiles[randomTile].GetComponent<Tile>().CanTurnPowerup())
                 {
-                    randInt = Random.Range(1, 4);
+                    randInt = Random.Range(1, 5);
                     //Choose which PU to give
                     if (randInt == 1){listOfTiles[randomTile].GetComponent<Tile>().TurnBoost();}
                     else if (randInt == 2){listOfTiles[randomTile].GetComponent<Tile>().TurnTempTilePU();}
                     else if (randInt == 3) { SpawnScoreCube(); }
+                    else if (randInt == 4) { listOfTiles[randomTile].GetComponent<Tile>().TurnIceStormPU(); }
                     randomTile = -1;
                 }
             }

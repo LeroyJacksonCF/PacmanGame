@@ -15,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] Image powerupSprite;
     [SerializeField] Sprite boostSprite;
     [SerializeField] Sprite temptileSprite;
+    [SerializeField] Sprite iceStormSprite;
 
     [Header("Loss UI")]
     [SerializeField] TextMeshProUGUI lossScoreText;
@@ -138,6 +139,11 @@ public class ScoreManager : MonoBehaviour
         else if (iconString == "temptile")
         {
             powerupSprite.sprite = temptileSprite;
+            powerupSprite.gameObject.SetActive(true);
+        }
+        else if (iconString == "iceStorm")
+        {
+            powerupSprite.sprite = iceStormSprite;
             powerupSprite.gameObject.SetActive(true);
         }
         else

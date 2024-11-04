@@ -7,6 +7,7 @@ public class PowerupController : MonoBehaviour
 
     [SerializeField] private bool hasBoost;
     [SerializeField] private bool hasTempTile;
+    [SerializeField] private bool hasIceStormPU;
     public PlayerControls playerControlsScript;
     public GridManager gridManagerScript;
     public GameObject cameraObject;
@@ -15,6 +16,12 @@ public class PowerupController : MonoBehaviour
     private Tile furthestBoostTile;
     private bool foundFurthestBoostTile;
     private List<Tile> boostListOfTilesCrossed;
+
+    //Ice Storm stuff
+    private List<Tile> iceStormCloseList;
+    private List<Tile> iceStormFarList;
+    private List<Tile> tempIceStormFarList;
+
 
     public AudioSource playerBoostSource;
     public AudioSource playerPlaceTempTileSource;
@@ -32,6 +39,7 @@ public class PowerupController : MonoBehaviour
         {
             if (hasBoost){useBoost();}
             if (hasTempTile){useTempTile();}
+            if (hasIceStormPU) { useIceStorm(); }
         }
     }
 
@@ -56,6 +64,11 @@ public class PowerupController : MonoBehaviour
         if (!iceBoost)
         {
             playerBoostSource.Play();
+
+            hasBoost = false;
+
+            //Update Score Manager
+            cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
         }
 
         //Sets current input command, or if that is "none", then the exInput
@@ -143,6 +156,21 @@ public class PowerupController : MonoBehaviour
             //Check for other boost tiles
             if (tileCrossed.GetComponent<Tile>().hasBoost)
             {
+                gainBoost();
+                tileCrossed.GetComponent<Tile>().TurnDefault();
+            }
+
+            //Check for temp PU tiles
+            if (tileCrossed.GetComponent<Tile>().isTempTile)
+            {
+                gainTempTile();
+                tileCrossed.GetComponent<Tile>().TurnDefault();
+            }
+
+            //Check for ice storm tiles
+            if (tileCrossed.GetComponent<Tile>().hasIceStormPU)
+            {
+                gainIceStormPU();
                 tileCrossed.GetComponent<Tile>().TurnDefault();
             }
 
@@ -151,14 +179,10 @@ public class PowerupController : MonoBehaviour
                 tileCrossed.TempTileDecrease();
             }
 
-        playerControlsScript.currentTile = furthestBoostTile;
-        playerControlsScript.UpdatePosition();
+            playerControlsScript.currentTile = furthestBoostTile;
+            playerControlsScript.UpdatePosition();
 
-        hasBoost = false;
-
-        //Update Score Manager
-        cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
-        } 
+        }
     }
 
     public void gainTempTile(){
@@ -175,6 +199,45 @@ public class PowerupController : MonoBehaviour
             if (tile.IsBlank){tile.TurnTempTile();}
         }
         hasTempTile = false;
+        cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
+    }
+
+
+    public void gainIceStormPU()
+    {
+        ClearAllBoosts();
+        cameraObject.GetComponent<ScoreManager>().setInventoryIcon("iceStorm");
+        hasIceStormPU = true;
+    }
+    private void useIceStorm()
+    {
+        iceStormCloseList = new List<Tile>();
+        iceStormFarList = new List<Tile>();
+
+        iceStormCloseList = gridManagerScript.ReturnCompassTiles(gridManagerScript.ReturnPlayerTile(), false);
+
+        foreach (Tile closeTile in iceStormCloseList)
+        {
+            closeTile.GetComponent<Tile>().IceStormVFXBurst(false);
+            tempIceStormFarList = gridManagerScript.ReturnCompassTiles(closeTile, false);
+
+            foreach (Tile farTile in tempIceStormFarList)
+            {
+                Debug.Log("fartile");
+                if (iceStormCloseList.Contains(farTile) == false)
+                {
+                    iceStormFarList.Add(farTile);
+                    Debug.Log("Added to far tile list");
+                }
+            }
+        }
+
+        foreach (Tile farTile in iceStormFarList)
+        {
+            farTile.GetComponent<Tile>().IceStormVFXBurst(true);
+        }
+
+        hasIceStormPU = false;
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
     }
 }

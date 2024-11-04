@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     public bool hasScoreCube;
     public bool hasBoost;
     public bool hasTempTilePU;
+    public bool hasIceStormPU;
     public bool isTempTile;
     public bool turnedGrass;
     public bool isIce;
@@ -25,6 +26,7 @@ public class Tile : MonoBehaviour
     public GameObject TempTile03;
     public GameObject TempTile02;
     public GameObject TempTile01;
+    public GameObject IceStormPU;
 
     private int boostTurns;
     public List<Tile> surroundingTiles;
@@ -42,6 +44,8 @@ public class Tile : MonoBehaviour
     [SerializeField] ParticleSystem chestVFX;
     [SerializeField] ParticleSystem chestDelayedVFX;
     [SerializeField] AudioSource chestOpenSFX;
+    [SerializeField] ParticleSystem iceStormCloseVFX;
+    [SerializeField] ParticleSystem iceStormFarVFX;
 
 
     public void TurnMountain()
@@ -64,11 +68,13 @@ public class Tile : MonoBehaviour
         hasTempTilePU = false;
         TempTilePU.SetActive(false);
         isIce = false;
+        hasIceStormPU = false;
+        IceStormPU.SetActive(false);
     }
 
     public bool CanTurnPowerup()
     {
-        if (!IsOccupied && !hasScoreCube && !hasBoost && !isTempTile && bombState != 1) { return true; }
+        if (!IsOccupied && !hasScoreCube && !hasBoost && !isTempTile && bombState != 1 && !hasIceStormPU) { return true; }
         else { return false; }
     }
     public void TurnScoreCube()
@@ -146,6 +152,12 @@ public class Tile : MonoBehaviour
             tileSpriteRenderer.sprite = tileSpriteListGrass[tiletypeInt];
             turnedGrass = true;
         }
+    }
+
+    public void TurnIceStormPU()
+    {
+        hasIceStormPU = true;
+        IceStormPU.SetActive(true);
     }
 
     public void TurnTempTilePU()
@@ -242,5 +254,11 @@ public class Tile : MonoBehaviour
         {
             tileSpriteRendererUnder.sprite = null;
         }
+    }
+
+    public void IceStormVFXBurst(bool closeOrFar)
+    {
+        if (closeOrFar) { iceStormCloseVFX.Play(); }
+        else { iceStormFarVFX.Play(); }
     }
 }

@@ -263,6 +263,15 @@ public class PlayerControls : MonoBehaviour
             gridManagerObject.GetComponent<GridManager>().AddScore(50); //Add 100 points
             currentTile.GetComponent<Tile>().ClaimScoreCube();
         }
+
+        //iceStorm powerup
+        if (currentTile.GetComponent<Tile>().hasIceStormPU == true)
+        {
+            //reset tile underneath me
+            currentTile.GetComponent<Tile>().TurnDefault();
+            gridManagerObject.GetComponent<GridManager>().currentNumOfPUs -= 1;
+            powerupControllerScript.gainIceStormPU();
+        }
     }
     private void MoveOffTempTile(){
         //If walking off a temptile, then trigger it
