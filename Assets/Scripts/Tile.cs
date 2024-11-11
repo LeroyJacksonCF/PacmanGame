@@ -58,7 +58,6 @@ public class Tile : MonoBehaviour
     public void TurnDefault()
     {
         IsOccupied = false;
-        ExtraScoreCube.SetActive(false);
         hasScoreCube = false;
         boostG.SetActive(false);
         boostB.SetActive(false);
@@ -67,7 +66,7 @@ public class Tile : MonoBehaviour
         if (bombState == 0) { dirt.SetActive(true); }
         hasTempTilePU = false;
         TempTilePU.SetActive(false);
-        isIce = false;
+        //isIce = false;
         hasIceStormPU = false;
         IceStormPU.SetActive(false);
     }
@@ -85,10 +84,13 @@ public class Tile : MonoBehaviour
 
     public void ClaimScoreCube()
     {
-        TurnDefault();
+        gridManagerObject.GetComponent<GridManager>().AddScore(50);
+        hasScoreCube = false;
+        ExtraScoreCube.SetActive(false);
         chestVFX.Play();
         chestOpenSFX.Play();
         chestDelayedVFX.Play();
+        gridManagerObject.GetComponent<GridManager>().currentNumOfPUs -= 1;
     }
 
     public void TurnBoost()

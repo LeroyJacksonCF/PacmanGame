@@ -22,8 +22,8 @@ public class GridManager : MonoBehaviour
     private int currentRoundTillNextEnemy;
 
     [Header("ListOfAssets")]
-    [SerializeField] private List<GameObject> enemyList;
-    [SerializeField] private List<GameObject> fastEnemyList;
+    public List<GameObject> enemyList;
+    public List<GameObject> fastEnemyList;
     private int numOfEnemies = 0;
     public int numOfFastEnemies = 0;
     public List<Tile> listOfTiles;

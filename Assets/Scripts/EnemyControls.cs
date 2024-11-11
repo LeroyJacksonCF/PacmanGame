@@ -11,11 +11,14 @@ public class EnemyControls : MonoBehaviour
     [Header ("Personality")]
     public bool isSmart;
     public bool fast;
+    public int frozenCount;
 
     [Header("Models")]
     [SerializeField] private GameObject regularModel;
     [SerializeField] private GameObject fastModel;
     [SerializeField] private ParticleSystem trailVFX;
+    [SerializeField] private GameObject regularFrozen;
+    [SerializeField] private GameObject fastFrozen;
 
     [Header("Relativity To Player - don't edit")]
     [SerializeField] private int isPlayerUpDown = 2; // 1 up, 2 mid, 3 down
@@ -71,19 +74,51 @@ public class EnemyControls : MonoBehaviour
         else if (DirectionToPlayer.z == 0) { isPlayerLeftRight = 2; }
         else { isPlayerLeftRight = 3; }
 
-        if (isSmart) //Smarter AI, always b-lines, even into walls, but never takes a wrong move
+
+        //Frozen logic
+        if (frozenCount > 0)
         {
-            if (isPlayerUpDown == 2) // same height as player
+            frozenCount -= 1;
+
+            //diasble hats
+            if (frozenCount == 1)
             {
-                if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
-                else { MoveEnemyRight(); } // then move right
+                regularFrozen.SetActive(false);
+                fastFrozen.SetActive(false);
             }
-            else if (isPlayerLeftRight == 2) // if same side-to-side as player
+
+
+        }
+        else
+        {
+            if (isSmart) //Smarter AI, always b-lines, even into walls, but never takes a wrong move
             {
-                if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
-                else { MoveEnemyDown(); } // then move down
+                if (isPlayerUpDown == 2) // same height as player
+                {
+                    if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
+                    else { MoveEnemyRight(); } // then move right
+                }
+                else if (isPlayerLeftRight == 2) // if same side-to-side as player
+                {
+                    if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
+                    else { MoveEnemyDown(); } // then move down
+                }
+                else // if neither
+                {
+                    int randomInt = Random.Range(1, 100);
+                    if (randomInt <= 50)
+                    {
+                        if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
+                        else { MoveEnemyRight(); } // then move right
+                    }
+                    else
+                    {
+                        if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
+                        else { MoveEnemyDown(); } // then move down
+                    }
+                }
             }
-            else // if neither
+            else if (!isSmart) //b-lines until in line with player, then 50% chance to go out of line
             {
                 int randomInt = Random.Range(1, 100);
                 if (randomInt <= 50)
@@ -98,21 +133,6 @@ public class EnemyControls : MonoBehaviour
                 }
             }
         }
-        else if (!isSmart) //b-lines until in line with player, then 50% chance to go out of line
-        {
-            int randomInt = Random.Range(1, 100);
-            if (randomInt <= 50)
-            {
-                if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
-                else { MoveEnemyRight(); } // then move right
-            }
-            else
-            {
-                if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
-                else { MoveEnemyDown(); } // then move down
-            }
-        }
-
         if (currentTile == gridManagerObject.GetComponent<GridManager>().ReturnPlayerTile())
         {
             gridManagerObject.GetComponent<GridManager>().GameOver();
@@ -167,5 +187,12 @@ public class EnemyControls : MonoBehaviour
     public bool ReturnIsFast()
     {
         return fast;
+    }
+
+    public void FreezeAnimal(int givenFreezeCount) //Sets the frozen hat, and timer
+    {
+        frozenCount = givenFreezeCount;
+        regularFrozen.SetActive(true);
+        fastFrozen.SetActive(true);
     }
 }

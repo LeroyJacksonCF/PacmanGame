@@ -245,22 +245,21 @@ public class PlayerControls : MonoBehaviour
         {
             //reset tile underneath me
             currentTile.GetComponent<Tile>().TurnDefault();
-            gridManagerObject.GetComponent<GridManager>().currentNumOfPUs -= 1;
             powerupControllerScript.gainBoost();
         }
 
+        //Temp Tile PU
         if (currentTile.GetComponent<Tile>().hasTempTilePU == true)
         {
             //reset tile underneath me
             currentTile.GetComponent<Tile>().TurnDefault();
-            gridManagerObject.GetComponent<GridManager>().currentNumOfPUs -= 1;
             powerupControllerScript.gainTempTile();
         }
        
         //Regular ScoreCube logic
         if (currentTile.GetComponent<Tile>().hasScoreCube == true)
         {
-            gridManagerObject.GetComponent<GridManager>().AddScore(50); //Add 100 points
+            currentTile.GetComponent<Tile>().TurnDefault();
             currentTile.GetComponent<Tile>().ClaimScoreCube();
         }
 
@@ -269,7 +268,6 @@ public class PlayerControls : MonoBehaviour
         {
             //reset tile underneath me
             currentTile.GetComponent<Tile>().TurnDefault();
-            gridManagerObject.GetComponent<GridManager>().currentNumOfPUs -= 1;
             powerupControllerScript.gainIceStormPU();
         }
     }
@@ -286,7 +284,6 @@ public class PlayerControls : MonoBehaviour
         {
             if (currentTile.isIce)
             {
-                Debug.Log("Slip");
                 playerAudioSource1.clip = walkingSounds[Random.Range(0, walkingIceSounds.Count - 1)];
             }
             else

@@ -46,12 +46,14 @@ public class PowerupController : MonoBehaviour
     public void ClearAllBoosts(){
         hasBoost = false;
         hasTempTile = false;
+        hasIceStormPU = false;
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
     }
     public void gainBoost(){
         ClearAllBoosts();
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("boost");
         hasBoost = true;
+        gridManagerScript.currentNumOfPUs -= 1;
     }
     public void useBoost(bool iceBoost = false)
     {
@@ -136,14 +138,15 @@ public class PowerupController : MonoBehaviour
             }
         }
 
+        Debug.Log("Travelled tiles =" + boostListOfTilesCrossed.Count);
+
         //Check boosted tiles for stuff
         foreach (Tile tileCrossed in boostListOfTilesCrossed)
         {
             //Check boosted tiles for scorecube
             if (tileCrossed.GetComponent<Tile>().hasScoreCube == true)
             {
-                gridManagerScript.GetComponent<GridManager>().AddScore(50); //Add 50 points
-                tileCrossed.GetComponent<Tile>().TurnDefault();
+                tileCrossed.GetComponent<Tile>().ClaimScoreCube();
             }
 
             //Check boosted tiles for bomb tiles
@@ -161,7 +164,7 @@ public class PowerupController : MonoBehaviour
             }
 
             //Check for temp PU tiles
-            if (tileCrossed.GetComponent<Tile>().isTempTile)
+            if (tileCrossed.GetComponent<Tile>().hasTempTilePU)
             {
                 gainTempTile();
                 tileCrossed.GetComponent<Tile>().TurnDefault();
@@ -189,6 +192,7 @@ public class PowerupController : MonoBehaviour
         ClearAllBoosts();
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("temptile");
         hasTempTile = true;
+        gridManagerScript.currentNumOfPUs -= 1;
     }
 
     private void useTempTile(){
@@ -208,6 +212,7 @@ public class PowerupController : MonoBehaviour
         ClearAllBoosts();
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("iceStorm");
         hasIceStormPU = true;
+        gridManagerScript.currentNumOfPUs -= 1;
     }
     private void useIceStorm()
     {
@@ -236,6 +241,39 @@ public class PowerupController : MonoBehaviour
         {
             farTile.GetComponent<Tile>().IceStormVFXBurst(true);
         }
+
+
+        //freeze enemies
+        foreach (GameObject enemy in gridManagerScript.enemyList)
+        {
+            if (iceStormCloseList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
+            {
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(8);
+                Debug.Log("Regular enemy - Close Frozen");
+            }
+            else if (iceStormFarList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
+            {
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(4);
+                Debug.Log("Regular enemy - Far Frozen");
+            }
+        }
+        foreach (GameObject enemy in gridManagerScript.fastEnemyList)
+        {
+            if (iceStormCloseList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
+            {
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(8);
+                Debug.Log("Fast enemy - Close Frozen");
+            }
+            else if (iceStormFarList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
+            {
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(4);
+                Debug.Log("Fast enemy - Far Frozen");
+            }
+        }
+
+
+
+
 
         hasIceStormPU = false;
         cameraObject.GetComponent<ScoreManager>().setInventoryIcon("");
