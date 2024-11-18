@@ -667,7 +667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.5}
   m_AnchorMax: {x: 0.75, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035156, y: 140.0004}
+  m_AnchoredPosition: {x: -0.00012207031, y: 140.0004}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.7}
 --- !u!114 &415687373
@@ -2101,9 +2101,9 @@ MonoBehaviour:
   _height: 3
   PlayerStartingPosition: 0
   maxNumOfPUs: 1
-  turnsTillPUNumIncrease: 3
+  turnsTillPUNumIncrease: 4
   currentNumOfPUs: 0
-  turnsTillPUSpawn: 3
+  turnsTillPUSpawn: 5
   roundsTillNextEnemy: 2
   enemyList: []
   fastEnemyList: []

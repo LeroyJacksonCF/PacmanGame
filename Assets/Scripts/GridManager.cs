@@ -13,9 +13,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int _height;
     [SerializeField] private int PlayerStartingPosition;
     [SerializeField] private int maxNumOfPUs;
+    public int currentNumOfPUs;
     [SerializeField] private int turnsTillPUNumIncrease;
     private int currentPUIncreaseCountdown;
-    public int currentNumOfPUs;
     [SerializeField] private int turnsTillPUSpawn;
     private int currentTurnTillPUSpawn;
     public int roundsTillNextEnemy;
@@ -64,7 +64,6 @@ public class GridManager : MonoBehaviour
         GenerateGrid();
         SpawnPlayer();
         SpawnBomb();
-        SpawnScoreCube();
 
         ResetCamera();
     }
@@ -181,7 +180,7 @@ public class GridManager : MonoBehaviour
             || listOfTiles.IndexOf(enemyTileSpawn) % _width == (_width - 1)))
             {
                 enemy.GetComponent<EnemyControls>().SpawnEnemy(enemyTileSpawn);
-                enemyTileSpawn.GetComponent<Tile>().TurnDefault();
+                //enemyTileSpawn.GetComponent<Tile>().TurnDefault();
                 enemy.GetComponent<EnemyControls>().gridManagerObject = gameObject;
 
                 validEnemySpawn = true;
@@ -360,7 +359,7 @@ public class GridManager : MonoBehaviour
 
                 enemyUnit.GetComponent<EnemyControls>().TakeTurn();
         } 
-        currentTurnTillPUSpawn += 1;
+        //currentTurnTillPUSpawn += 1;
     }
 
     public void AddScore(int extraPoints)

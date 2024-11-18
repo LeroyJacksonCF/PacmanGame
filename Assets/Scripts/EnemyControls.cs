@@ -17,8 +17,6 @@ public class EnemyControls : MonoBehaviour
     [SerializeField] private GameObject regularModel;
     [SerializeField] private GameObject fastModel;
     [SerializeField] private ParticleSystem trailVFX;
-    [SerializeField] private GameObject regularFrozen;
-    [SerializeField] private GameObject fastFrozen;
 
     [Header("Relativity To Player - don't edit")]
     [SerializeField] private int isPlayerUpDown = 2; // 1 up, 2 mid, 3 down
@@ -28,6 +26,8 @@ public class EnemyControls : MonoBehaviour
     private Vector3 currentPos;
     private Vector3 nextPos;
     private float movementLerpAmount;
+    [SerializeField] private Animator cowAnimator;
+    [SerializeField] private Animator chickenAnimator;
 
 
     void Update()
@@ -83,8 +83,8 @@ public class EnemyControls : MonoBehaviour
             //diasble hats
             if (frozenCount == 1)
             {
-                regularFrozen.SetActive(false);
-                fastFrozen.SetActive(false);
+                cowAnimator.SetBool("Frozen", false);
+                chickenAnimator.SetBool("Frozen", false);
             }
 
 
@@ -192,7 +192,7 @@ public class EnemyControls : MonoBehaviour
     public void FreezeAnimal(int givenFreezeCount) //Sets the frozen hat, and timer
     {
         frozenCount = givenFreezeCount;
-        regularFrozen.SetActive(true);
-        fastFrozen.SetActive(true);
+        cowAnimator.SetBool("Frozen", true);
+        chickenAnimator.SetBool("Frozen", true);
     }
 }

@@ -138,8 +138,6 @@ public class PowerupController : MonoBehaviour
             }
         }
 
-        Debug.Log("Travelled tiles =" + boostListOfTilesCrossed.Count);
-
         //Check boosted tiles for stuff
         foreach (Tile tileCrossed in boostListOfTilesCrossed)
         {
@@ -228,11 +226,9 @@ public class PowerupController : MonoBehaviour
 
             foreach (Tile farTile in tempIceStormFarList)
             {
-                Debug.Log("fartile");
                 if (iceStormCloseList.Contains(farTile) == false)
                 {
                     iceStormFarList.Add(farTile);
-                    Debug.Log("Added to far tile list");
                 }
             }
         }
@@ -248,26 +244,22 @@ public class PowerupController : MonoBehaviour
         {
             if (iceStormCloseList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
             {
-                enemy.GetComponent<EnemyControls>().FreezeAnimal(8);
-                Debug.Log("Regular enemy - Close Frozen");
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(5);
             }
             else if (iceStormFarList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
             {
-                enemy.GetComponent<EnemyControls>().FreezeAnimal(4);
-                Debug.Log("Regular enemy - Far Frozen");
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(3);
             }
         }
         foreach (GameObject enemy in gridManagerScript.fastEnemyList)
         {
             if (iceStormCloseList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
             {
-                enemy.GetComponent<EnemyControls>().FreezeAnimal(8);
-                Debug.Log("Fast enemy - Close Frozen");
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(3);
             }
             else if (iceStormFarList.Contains(enemy.GetComponent<EnemyControls>().currentTile))
             {
-                enemy.GetComponent<EnemyControls>().FreezeAnimal(4);
-                Debug.Log("Fast enemy - Far Frozen");
+                enemy.GetComponent<EnemyControls>().FreezeAnimal(2);;
             }
         }
 

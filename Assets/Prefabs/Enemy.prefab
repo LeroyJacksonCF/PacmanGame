@@ -733,10 +733,10 @@ MonoBehaviour:
   regularModel: {fileID: 7290059207537029437}
   fastModel: {fileID: 1117884330}
   trailVFX: {fileID: 3083391006353059474}
-  regularFrozen: {fileID: 1717823004041587939}
-  fastFrozen: {fileID: 6673551867453587660}
   isPlayerUpDown: 2
   isPlayerLeftRight: 2
+  cowAnimator: {fileID: 4488318072977265720}
+  chickenAnimator: {fileID: 4994129711573251264}
 --- !u!1 &6673551867453587660
 GameObject:
   m_ObjectHideFlags: 0
