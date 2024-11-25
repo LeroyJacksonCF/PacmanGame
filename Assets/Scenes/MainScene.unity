@@ -138,14 +138,6 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.3
       objectReference: {fileID: 0}
-    - target: {fileID: 3998844020873195484, guid: ad0d70ddcea44c14eae14fda3d5ceaa9, type: 3}
-      propertyPath: m_Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5210678590358051684, guid: ad0d70ddcea44c14eae14fda3d5ceaa9, type: 3}
-      propertyPath: m_Pitch
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5298933032605013790, guid: ad0d70ddcea44c14eae14fda3d5ceaa9, type: 3}
       propertyPath: m_Pitch
       value: 1
@@ -2101,8 +2093,8 @@ MonoBehaviour:
   _height: 3
   PlayerStartingPosition: 0
   maxNumOfPUs: 1
-  turnsTillPUNumIncrease: 4
   currentNumOfPUs: 0
+  turnsTillPUNumIncrease: 4
   turnsTillPUSpawn: 5
   roundsTillNextEnemy: 2
   enemyList: []

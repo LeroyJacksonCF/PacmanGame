@@ -51,12 +51,11 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 1f654ea336a6c6d49859396b532135b2, type: 3}
     - {fileID: 2800000, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
     - {fileID: 2800000, guid: 05cacebb7b7e0514a8535003e7e52e1b, type: 3}
-    - {fileID: 2800000, guid: 51daa5edb4312f84cb3eb049e8f89a20, type: 3}
+    - {fileID: 2800000, guid: b77d4bb4943c1e649960c77e05e07f91, type: 3}
     - {fileID: 2800000, guid: 3ce43f2bfe5f91448a901d88a01c9065, type: 3}
     - {fileID: 2800000, guid: b804d1f1eeb9c21419f55f3e2830340e, type: 3}
     - {fileID: 2800000, guid: b26d10c0ba17fdf4a8f7f939343942ca, type: 3}
     - {fileID: 2800000, guid: 1c7c617226f194b4c99b8910b23e9c4e, type: 3}
-    - {fileID: 2800000, guid: b77d4bb4943c1e649960c77e05e07f91, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -567,8 +566,6 @@ SpriteAtlas:
   - {fileID: -2111619980, guid: 05cacebb7b7e0514a8535003e7e52e1b, type: 3}
   - {fileID: -1808992235, guid: 05cacebb7b7e0514a8535003e7e52e1b, type: 3}
   - {fileID: 1582381951, guid: 05cacebb7b7e0514a8535003e7e52e1b, type: 3}
-  - {fileID: 619401336, guid: 51daa5edb4312f84cb3eb049e8f89a20, type: 3}
-  - {fileID: -1008027798, guid: 51daa5edb4312f84cb3eb049e8f89a20, type: 3}
   - {fileID: 481527174, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
   - {fileID: -523292390, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
   - {fileID: -871814688, guid: 5986697e5c690c44ca48e84cb1237ef5, type: 3}
@@ -1081,8 +1078,6 @@ SpriteAtlas:
   - Basic Charakter Spritesheet_13
   - Basic Charakter Spritesheet_10
   - Basic Charakter Spritesheet_11
-  - Chest_VFX_0
-  - Chest_VFX_1
   - Free Chicken Sprites_3
   - Free Chicken Sprites_2
   - Free Chicken Sprites_1

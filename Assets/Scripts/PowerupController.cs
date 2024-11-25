@@ -25,6 +25,7 @@ public class PowerupController : MonoBehaviour
 
     public AudioSource playerBoostSource;
     public AudioSource playerPlaceTempTileSource;
+    public AudioSource playerIceStormSource;
 
     void Start()
     {
@@ -217,11 +218,12 @@ public class PowerupController : MonoBehaviour
         iceStormCloseList = new List<Tile>();
         iceStormFarList = new List<Tile>();
 
+        playerIceStormSource.Play();
         iceStormCloseList = gridManagerScript.ReturnCompassTiles(gridManagerScript.ReturnPlayerTile(), false);
 
         foreach (Tile closeTile in iceStormCloseList)
         {
-            closeTile.GetComponent<Tile>().IceStormVFXBurst(false);
+            closeTile.GetComponent<Tile>().IceStormVFXBurst(true);
             tempIceStormFarList = gridManagerScript.ReturnCompassTiles(closeTile, false);
 
             foreach (Tile farTile in tempIceStormFarList)
@@ -233,9 +235,11 @@ public class PowerupController : MonoBehaviour
             }
         }
 
+        iceStormFarList.Remove(gridManagerScript.ReturnPlayerTile()); //Didn't work, I think 25/11
+
         foreach (Tile farTile in iceStormFarList)
         {
-            farTile.GetComponent<Tile>().IceStormVFXBurst(true);
+            farTile.GetComponent<Tile>().IceStormVFXBurst(false);
         }
 
 
