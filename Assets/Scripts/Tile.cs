@@ -129,7 +129,7 @@ public class Tile : MonoBehaviour
 
     public void TurnBomb()
     {
-        if (bombState == 0 || bombState == 2)
+        if ((bombState == 0 || bombState == 2) && gameObject.GetComponent<Tile>() != gridManagerObject.GetComponent<GridManager>().ReturnPlayerTile())
         {
             bombState = 1;
             bombTileUntouched.SetActive(true);

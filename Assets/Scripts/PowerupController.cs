@@ -39,8 +39,8 @@ public class PowerupController : MonoBehaviour
     if (Input.GetKeyDown(KeyCode.Space))
         {
             if (hasBoost){useBoost();}
-            if (hasTempTile){useTempTile();}
-            if (hasIceStormPU) { useIceStorm(); }
+            else if (hasTempTile){useTempTile();}
+            else if (hasIceStormPU) { useIceStorm(); }
         }
     }
 
