@@ -106,16 +106,16 @@ public class Tile : MonoBehaviour
         switch (boostTurns)
         {
 
-            case 20:
+            case 9:
                 boostG.SetActive(true);
                 break;
 
-            case 10:
+            case 6:
                 boostG.SetActive(false);
                 boostB.SetActive(true);
                 break;
 
-            case 1:
+            case 3:
                 boostB.SetActive(false);
                 boostR.SetActive(true);
                 break;
@@ -173,6 +173,8 @@ public class Tile : MonoBehaviour
         isTempTile = true;
         TempTileRemainder = 3;
         TempTile03.SetActive(true);
+        TempTile02.SetActive(false);
+        TempTile01.SetActive(false);
         IsOccupied = false;
         isIce = false;
     }

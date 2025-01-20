@@ -180,12 +180,13 @@ public class GridManager : MonoBehaviour
             || listOfTiles.IndexOf(enemyTileSpawn) % _width == (_width - 1)))
             {
                 enemy.GetComponent<EnemyControls>().SpawnEnemy(enemyTileSpawn);
-                //enemyTileSpawn.GetComponent<Tile>().TurnDefault();
                 enemy.GetComponent<EnemyControls>().gridManagerObject = gameObject;
 
                 validEnemySpawn = true;
             }
         }
+
+        enemy.SetActive(true);
     }
 
 
@@ -482,7 +483,7 @@ public class GridManager : MonoBehaviour
                 {
                     spawnedTile.GetComponent<Tile>().TurnMountain();
                 }
-                if (Random.Range(0.01f, 1f) >= 0.6f) // chance of ice tile
+                if (Random.Range(0.01f, 1f) >= 0.8f) // chance of ice tile
                 {
                     spawnedTile.GetComponent<Tile>().TurnIce();
                 }

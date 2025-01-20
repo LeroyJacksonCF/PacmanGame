@@ -50,6 +50,7 @@ public class EnemyControls : MonoBehaviour
     {
         currentTile = startingTile;
         UpdatePosition();
+
     }
 
     public void TakeTurn()
@@ -180,8 +181,6 @@ public class EnemyControls : MonoBehaviour
     public void SetFast()
     {
         fast = true;
-        regularModel.SetActive(false);
-        fastModel.SetActive(true);
     }
 
     public bool ReturnIsFast()
@@ -194,5 +193,11 @@ public class EnemyControls : MonoBehaviour
         frozenCount = givenFreezeCount;
         cowAnimator.SetBool("Frozen", true);
         chickenAnimator.SetBool("Frozen", true);
+    }
+
+    public void EnableEnemyModel()
+    {
+        if (fast) { fastModel.SetActive(true); }
+        else { regularModel.SetActive(true); }
     }
 }
