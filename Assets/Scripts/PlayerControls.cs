@@ -34,11 +34,7 @@ public class PlayerControls : MonoBehaviour
     private Vector3 nextPos;
     private float movementLerpAmount;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    private bool knockedBool;
 
     // Update is called once per frame
     void Update()
@@ -51,9 +47,9 @@ public class PlayerControls : MonoBehaviour
             else{
                 secondInputCommand = inputCommand;
                 inputCommand = "up";}
-            MovePlayerUp();
-            PlayerTurn();
-            holdingUpTimer = 0f;
+        MovePlayerUp();
+        PlayerTurn();
+        holdingUpTimer = 0f;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -305,6 +301,16 @@ public class PlayerControls : MonoBehaviour
             }
             playerAudioSource2.Play();
             playerstep1 = true;
+        }
+    }
+
+    public void knockPlayerBack(int dir)
+    {
+        if (!knockedBool)
+        {
+            playerAnimator.SetInteger("KnockedDir", dir);
+            print("dir is: " + dir);
+            knockedBool = true;
         }
     }
 }

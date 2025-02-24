@@ -52,6 +52,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] AudioSource mapExpandAudio;
     [SerializeField] AudioSource lossAudio;
 
+    private float endTimer = -1;
+
     //Compass vars
     private bool notTop = false;
     private bool notBot = false;
@@ -135,6 +137,16 @@ public class GridManager : MonoBehaviour
             if (Time.deltaTime > 1) { cameraLerp = 1;}
             cameraObject.GetComponent<Camera>().orthographicSize = Mathf.Lerp(oldCameraOrthSize, newCameraOrthSize, cameraLerp);
             cameraObject.gameObject.transform.position = Vector3.Lerp(oldCameraPosition, newCameraPosition, cameraLerp);
+        }
+
+        if (endTimer != -1)
+        {
+            endTimer += Time.deltaTime;
+            if (endTimer > 1)
+            {
+                GameOver();
+                endTimer = -1;
+            }
         }
     }
 
@@ -451,6 +463,17 @@ public class GridManager : MonoBehaviour
 
     public void ResetTimer(){
         scoreManager.ResetTime();
+    }
+
+    public void knockPlayer(int dir)
+    {
+        player.GetComponent<PlayerControls>().knockPlayerBack(dir);
+        Debug.Log("Just set Knocked dir to: " + dir);
+
+        if (endTimer == -1)
+        {
+            endTimer = 0;
+        }
     }
 
     public void GameOver(){

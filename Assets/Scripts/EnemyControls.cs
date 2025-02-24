@@ -25,6 +25,7 @@ public class EnemyControls : MonoBehaviour
     //Animation stuff
     private Vector3 currentPos;
     private Vector3 nextPos;
+    private int movedDir;
     private float movementLerpAmount;
     [SerializeField] private Animator cowAnimator;
     [SerializeField] private Animator chickenAnimator;
@@ -96,26 +97,26 @@ public class EnemyControls : MonoBehaviour
             {
                 if (isPlayerUpDown == 2) // same height as player
                 {
-                    if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
-                    else { MoveEnemyRight(); } // then move right
+                    if (isPlayerLeftRight == 1) { MoveEnemyLeft(); movedDir = 3; } // then move left
+                    else { MoveEnemyRight(); movedDir = 4; } // then move right
                 }
                 else if (isPlayerLeftRight == 2) // if same side-to-side as player
                 {
-                    if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
-                    else { MoveEnemyDown(); } // then move down
+                    if (isPlayerUpDown == 1) { MoveEnemyUp(); movedDir = 1; } // then move up
+                    else { MoveEnemyDown(); movedDir = 2; } // then move down
                 }
                 else // if neither
                 {
                     int randomInt = Random.Range(1, 100);
                     if (randomInt <= 50)
                     {
-                        if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
-                        else { MoveEnemyRight(); } // then move right
+                        if (isPlayerLeftRight == 1) { MoveEnemyLeft(); movedDir = 3; } // then move left
+                        else { MoveEnemyRight(); movedDir = 4; } // then move right
                     }
                     else
                     {
-                        if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
-                        else { MoveEnemyDown(); } // then move down
+                        if (isPlayerUpDown == 1) { MoveEnemyUp(); movedDir = 1; } // then move up
+                        else { MoveEnemyDown(); movedDir = 2; } // then move down
                     }
                 }
             }
@@ -124,19 +125,19 @@ public class EnemyControls : MonoBehaviour
                 int randomInt = Random.Range(1, 100);
                 if (randomInt <= 50)
                 {
-                    if (isPlayerLeftRight == 1) { MoveEnemyLeft(); } // then move left
-                    else { MoveEnemyRight(); } // then move right
+                    if (isPlayerLeftRight == 1) { MoveEnemyLeft(); movedDir = 3; } // then move left
+                    else { MoveEnemyRight(); movedDir = 4; } // then move right
                 }
                 else
                 {
-                    if (isPlayerUpDown == 1) { MoveEnemyUp(); } // then move up
-                    else { MoveEnemyDown(); } // then move down
+                    if (isPlayerUpDown == 1) { MoveEnemyUp(); movedDir = 1; } // then move up
+                    else { MoveEnemyDown(); movedDir = 2; } // then move down
                 }
             }
         }
         if (currentTile == gridManagerObject.GetComponent<GridManager>().ReturnPlayerTile())
         {
-            gridManagerObject.GetComponent<GridManager>().GameOver();
+            gridManagerObject.GetComponent<GridManager>().knockPlayer(movedDir);
         }
     }
 

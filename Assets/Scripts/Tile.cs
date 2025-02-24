@@ -73,7 +73,15 @@ public class Tile : MonoBehaviour
 
     public bool CanTurnPowerup()
     {
-        if (!IsOccupied && !hasScoreCube && !hasBoost && !isTempTile && bombState != 1 && !hasIceStormPU) { return true; }
+        if (!IsOccupied 
+            && !hasScoreCube 
+            && !hasBoost 
+            && !isTempTile
+            && !hasTempTilePU
+            && !hasIceStormPU
+            && bombState != 1 
+            && !hasIceStormPU) 
+        { return true; }
         else { return false; }
     }
     public void TurnScoreCube()
